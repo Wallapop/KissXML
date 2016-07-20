@@ -11,22 +11,27 @@ Pod::Spec.new do |s|
   s.default_subspecs = 'Core'
 
   s.subspec 'Core' do |ss|
-    ss.source_files = 'KissXML/**/*.{h,m}'
+    ss.source_files = ['KissXML/*.{h,m}', 'KissXML/Categories/*.{h,m}', 'KissXML/Private/*.{h,m}']
     ss.private_header_files = 'KissXML/Private/**/*.h'
     ss.library      = 'xml2'
     ss.xcconfig     = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2'}
   end
+  
+  s.subspec 'Additions' do |ss|
+    ss.dependency 'KissXML/Core'
+    ss.source_files = 'KissXML/Additions/*.{h,m}'
+  end
 
   # Requires 'use_frameworks!' in Podfile
   s.subspec 'SwiftNSXML' do |ss|
-  	ss.dependency 'KissXML/Core'
+    ss.dependency 'KissXML/Core'
     ss.source_files = 'KissXML/**/*.{h,m,swift}'
     ss.osx.exclude_files = 'KissXML/**/*.swift'
     ss.private_header_files = 'KissXML/Private/**/*.h'
     ss.ios.deployment_target = '8.0'
     ss.osx.deployment_target = '10.8'
-  	ss.tvos.deployment_target = '9.0'
-  	ss.watchos.deployment_target = '2.0'
+    ss.tvos.deployment_target = '9.0'
+    ss.watchos.deployment_target = '2.0'
   end
 
   # This is left here for backwards compatibility
@@ -34,8 +39,8 @@ Pod::Spec.new do |s|
     ss.dependency 'KissXML/SwiftNSXML'
     ss.ios.deployment_target = '8.0'
     ss.osx.deployment_target = '10.8'
-  	ss.tvos.deployment_target = '9.0'
-  	ss.watchos.deployment_target = '2.0'
+    ss.tvos.deployment_target = '9.0'
+    ss.watchos.deployment_target = '2.0'
   end
 
   s.ios.deployment_target = '6.0'
